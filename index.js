@@ -105,8 +105,8 @@ var line = d3.line()
                         .attr("font-size", 25)
 
   var title = graphSVG.append("text")
-                        .text("Quiz Grades")
-                        .attr("x", function(){return graphWidth/2 + margins.left - 50})
+                        .text("Quiz Grades: Bookworm Penguin")
+                        .attr("x", function(){return graphWidth/2 + margins.left - 150})
                         .attr("y", function(){return margins.top -10})
                         .attr("font-size", 25)
 
@@ -207,8 +207,8 @@ var area = d3.area()
                         .attr("font-size", 25)
 
   var title = graphSVG.append("text")
-                        .text("Quiz Grades")
-                        .attr("x", function(){return graphWidth/2 + margins.left - 50})
+                        .text("Quiz Grades: Bookworm Penguin")
+                        .attr("x", function(){return graphWidth/2 + margins.left - 150})
                         .attr("y", function(){return margins.top -10})
                         .attr("font-size", 25)
 
