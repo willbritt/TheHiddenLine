@@ -1,7 +1,10 @@
 var dataP = d3.json("classData.json");
 
-
-
+dataP.then(function(data)
+{
+    drawLineChart(data, "#chart", "test", screenSettings, marginSettings);
+    initEventListeners();
+});
 
 var screenSettings = {
   width: window.innerWidth * 0.8,
@@ -15,31 +18,31 @@ var marginSettings = {
   right: 0
 }
 
+//// Line Chart  ////
 var drawLineChart = function(dataSet, svgSelector, selectedPerson, screen, margins)
-//This function is called at the bottom of the code.
 {
   console.log("start")
   //
   var quizData = dataSet[0].quizes
   console.log("QuizData", quizData)
-  //Draw a histogram using the selectedDay's info
+  console.log(quizData.length)
   var graphWidth  = screen.width - margins.left - margins.right;
   var graphHeight = screen.height - margins.top - margins.bottom;
   var borderWidth = 1;
 
   var xScale = d3.scaleLinear()
-                .domain([0, quizData.length])
-                .range([0, graphWidth])
-  // var xAxisScale = d3.scaleLinear()
-  //                   .domain([0, dataSet[day].length])
-  //                   .range([0, graphHeight]);
+                .domain([1, quizData.length])
+                .range([margins.left,(graphWidth-margins.right)]);
+  var xAxis = d3.axisBottom()
+                .scale(xScale)
+                .tickValues([5,10,15,20,25,30,35,40]);
 
   var yScale = d3.scaleLinear()
                 .domain([0, 10])
-                .range([0, graphHeight]);
+                .range([0, graphHeight - 70 ]);
 
   var yAxisScale = d3.scaleLinear()
-                .domain([0, quizData.length])
+                .domain([0, 100])
                 .range([graphHeight, 0]);
 
   var yAxis = d3.axisLeft()
@@ -70,54 +73,171 @@ var drawLineChart = function(dataSet, svgSelector, selectedPerson, screen, margi
                     .attr("y", margins.top)
                     .classed("graph-data", true);
 
-  //
-  //
-  // var yAxis = graphSVG.append("g")
-  //                     .call(yAxis)
-  //                     .attr("transform", function(){
-  //                     return "translate(" + (margins.left - 3) + "," + margins.top + ")";
-  //                     });
-var lineDrawer = d3.line()
-                  .x(function(dayObj){return dayObj.day})
-                  .y(function(dayObj){return dayObj.grade})
+var line = d3.line()
+          .x(function(d){return xScale(d.day)})
+          .y(function(d){return yScale(d.grade)});
 
- var line = graphData.append("path")
-                      .datum(quizData)
-                      .attr("d", lineDrawer)
-                      .attr("fill", colorScale("quiz"))
+ var lineDrawer = graphSVG.append("path")
+                          .datum(quizData)
+                          .attr("fill", colorScale("quiz"))
+                          .attr("fill", "none")
+                          .attr("stroke", "steelblue")
+                          .attr("stroke-linejoin", "round")
+                          .attr("stroke-linecap", "round")
+                          .attr("stroke-width", 3)
+                          .attr("class","line")
+                          .attr("d",line);
+
+ var xAxisGraphic = graphSVG.append('g')
+                    .call(xAxis)
+                    .attr("transform","translate("+0+"," +(graphHeight + 60)+")");
+
+ var yAxisGraphic = graphSVG.append("g")
+                     .call(yAxis)
+                     .attr("transform", function(){
+                       return "translate(" + margins.left + "," + (margins.top) + ")";
+                       });
 
   var xLabel = graphSVG.append("text")
                         .text("Day")
-                        .attr("x", function(){return graphWidth/2 + margins.left - 35})
+                        .attr("x", function(){return graphWidth/2 + margins.left - 20})
                         .attr("y", function(){return graphHeight + margins.top + 70})
+                        .attr("font-size", 25)
+
+  var title = graphSVG.append("text")
+                        .text("Quiz Grades")
+                        .attr("x", function(){return graphWidth/2 + margins.left - 50})
+                        .attr("y", function(){return margins.top -10})
                         .attr("font-size", 25)
 
     var yLabel = graphSVG.append("text")
                           .text("Score(%)")
-                          .attr("x", function(){return margins.left - 50})
+                          .attr("x", function(){return margins.left - 75})
                           .attr("y", function(){return margins.top - 10})
                           .attr("font-size", 20)
-//var graphBars = graphData.selectAll("rect")
-                     // .data(scoreFrequencies)
-                     // .enter()
-                     // .append("rect")
-                     // .attr("width", barWidth)
-                     // .attr("height", function(d){console.log("Loop"); return 10;})
-
-                    //  .attr("width", barWidth)
-                    //  .attr("height", function(peng){
-                    //                   console.log(peng[selectedDay]);
-                    //                   return yScale(peng[selectedDay])})
-                    //  .attr("x", function(d,i)
-                    //  { return margins.left + i*barWidth + (graphWidth/16);})//adjusting the center of bar
-                    //  .attr("y", function(person){
-                    //                   return graphHeight + margins.top- yScale(peng[selectedDay]) - 2})
-                    // .attr("fill", function(person){return colorScale(person.name)})
-                    // .style("stroke", "#EBFCFB")
-                    // .style("stroke-width", 2)
-                    // .classed("data-bar", true);
 };
 
-dataP.then(function(data){
-    drawLineChart(data, "#chart", "test", screenSettings, marginSettings);
+//// Area Chart ////
+var drawAreaChart = function(dataSet, svgSelector, selectedPerson, screen, margins)
+{
+  console.log("start")
+  //
+  var quizData = dataSet[0].quizes
+  console.log("QuizData", quizData)
+  console.log(quizData.length)
+
+  var graphWidth  = screen.width - margins.left - margins.right;
+  var graphHeight = screen.height - margins.top - margins.bottom;
+  var borderWidth = 1;
+
+  var xScale = d3.scaleLinear()
+                .domain([1, quizData.length])
+                .range([margins.left,(graphWidth-margins.right)]);
+
+  var xAxis = d3.axisBottom()
+                .scale(xScale)
+                .tickValues([5,10,15,20,25,30,35,40]);
+
+  var yScale = d3.scaleLinear()
+                .domain([0, 10])
+                .range([0, graphHeight - 70]);
+
+  var yAxisScale = d3.scaleLinear()
+                .domain([0, 100])
+                .range([graphHeight, 0]);
+
+  var yAxis = d3.axisLeft()
+                .scale(yAxisScale);
+
+
+  var colorScale = d3.scaleOrdinal(d3.schemeAccent);
+
+  var graphSVG = d3.select(svgSelector)
+              .attr("width", screen.width)
+              .attr("height", screen.height);
+
+
+  graphBorder = graphSVG.append("rect")
+                     .attr("border-style", "solid")
+                     .attr("x", margins.left)
+                     .attr("y", margins.top)
+                     .attr("width", graphWidth)
+                     .attr("height", graphHeight)
+                     .attr("fill", "#d5f4e6")
+                     .style("stroke", "black")
+                     .style("stroke-width", borderWidth)
+                     .classed("graph-border", true);
+
+
+  var graphData = graphSVG.append("g")
+                    .attr("x", margins.left)
+                    .attr("y", margins.top)
+                    .classed("graph-data", true);
+
+var area = d3.area()
+          .x(function(d){return xScale(d.day)})
+          .y0(function(d){return graphHeight + margins.top;})
+          .y1(function(d){return yScale(d.grade)});
+
+ var areaDrawer = graphSVG.append("path")
+                          .datum(quizData)
+                          .attr("fill", colorScale("quiz"))
+                          //.attr("fill", "none")
+                          .attr("stroke", "steelblue")
+                          .attr("stroke-linejoin", "round")
+                          .attr("stroke-linecap", "round")
+                          .attr("stroke-width", 3)
+                          .attr("class","area")
+                          .attr("d",area);
+
+ var xAxisGraphic = graphSVG.append('g')
+                    .call(xAxis)
+                    .attr("transform","translate("+0+"," +(graphHeight + 60)+")");
+
+ var yAxisGraphic = graphSVG.append("g")
+                     .call(yAxis)
+                     .attr("transform", function(){
+                       return "translate(" + margins.left + "," + (margins.top) + ")";
+                       });
+
+  var xLabel = graphSVG.append("text")
+                        .text("Day")
+                        .attr("x", function(){return graphWidth/2 + margins.left - 20})
+                        .attr("y", function(){return graphHeight + margins.top + 70})
+                        .attr("font-size", 25)
+
+  var title = graphSVG.append("text")
+                        .text("Quiz Grades")
+                        .attr("x", function(){return graphWidth/2 + margins.left - 50})
+                        .attr("y", function(){return margins.top -10})
+                        .attr("font-size", 25)
+
+    var yLabel = graphSVG.append("text")
+                          .text("Score(%)")
+                          .attr("x", function(){return margins.left - 75})
+                          .attr("y", function(){return margins.top - 10})
+                          .attr("font-size", 20)
+};
+
+var initEventListeners = function(){
+//next button
+  d3.select("#next")
+    .on("click", function(d){
+    console.log("Next button clicked")
+    dataP.then(function(data)
+    {
+      drawAreaChart(data, "#chart", "test", screenSettings, marginSettings);
     });
+  });
+
+  //Previous button
+
+    d3.select("#prev")
+      .on("click", function(d){
+        console.log("Prev button clicked");
+        dataP.then(function(data)
+        {
+          drawLineChart(data, "#chart", "test", screenSettings, marginSettings);
+        });
+      });
+};
