@@ -2,7 +2,31 @@ var dataP = d3.json("classData.json");
 
 dataP.then(function(data)
 {
-    drawLineChart(data, "#chart", "test", screenSettings, marginSettings);
+    console.log(data);
+    drawLineChart(data, "#chart0", 0, screenSettings, marginSettings,"Bookworm Penguin");
+    drawLineChart(data, "#chart1", 1, screenSettings, marginSettings,"Crafty Penguin");
+    drawLineChart(data, "#chart2", 2, screenSettings, marginSettings,"Cyclist Penguin");
+    drawLineChart(data, "#chart3", 3, screenSettings, marginSettings,"Drunken Penguin");
+    drawLineChart(data, "#chart4", 4, screenSettings, marginSettings,"Easter Penguin");
+    drawLineChart(data, "#chart5", 5, screenSettings, marginSettings,"Ebook Penguin");
+    drawLineChart(data, "#chart6", 6, screenSettings, marginSettings,"Farmer Penguin");
+    drawLineChart(data, "#chart7", 7, screenSettings, marginSettings,"Gentleman Penguin");
+    drawLineChart(data, "#chart8", 8, screenSettings, marginSettings,"Judo Penguin");
+    drawLineChart(data, "#chart9", 9, screenSettings, marginSettings,"Moana Penguin");
+    drawLineChart(data, "#chart10", 10, screenSettings, marginSettings,"Painter Penguin");
+    drawLineChart(data, "#chart11", 11, screenSettings, marginSettings,"Grill Penguin");
+    drawLineChart(data, "#chart12", 12, screenSettings, marginSettings,"Pharaoh Penguin");
+    drawLineChart(data, "#chart13", 13, screenSettings, marginSettings,"Pilot Penguin");
+    drawLineChart(data, "#chart14", 14, screenSettings, marginSettings,"Pinga Corr");
+    drawLineChart(data, "#chart15", 15, screenSettings, marginSettings,"Pixie Penguin");
+    drawLineChart(data, "#chart16", 16, screenSettings, marginSettings,"Sailor Penguin");
+    drawLineChart(data, "#chart17", 17, screenSettings, marginSettings,"Santa Penguin");
+    drawLineChart(data, "#chart18", 18, screenSettings, marginSettings,"Tauch Penguin");
+    drawLineChart(data, "#chart19", 19, screenSettings, marginSettings,"Tux");
+    drawLineChart(data, "#chart20", 20, screenSettings, marginSettings,"Valentine Ocal");
+    drawLineChart(data, "#chart21", 21, screenSettings, marginSettings,"Valentine Penguin");
+    drawLineChart(data, "#chart22", 22, screenSettings, marginSettings,"Wizard Penguin");
+
     initEventListeners();
 });
 
@@ -19,11 +43,11 @@ var marginSettings = {
 }
 
 //// Line Chart  ////
-var drawLineChart = function(dataSet, svgSelector, selectedPerson, screen, margins)
+var drawLineChart = function(dataSet, svgSelector, index, screen, margins, name)
 {
   console.log("start")
   //
-  var quizData = dataSet[0].quizes
+  var quizData = dataSet[index].quizes
   console.log("QuizData", quizData)
   console.log(quizData.length)
   var graphWidth  = screen.width - margins.left - margins.right;
@@ -105,7 +129,7 @@ var line = d3.line()
                         .attr("font-size", 25)
 
   var title = graphSVG.append("text")
-                        .text("Quiz Grades: Bookworm Penguin")
+                        .text("Quiz Grades: "+ name)
                         .attr("x", function(){return graphWidth/2 + margins.left - 150})
                         .attr("y", function(){return margins.top -10})
                         .attr("font-size", 25)
@@ -118,11 +142,11 @@ var line = d3.line()
 };
 
 //// Area Chart ////
-var drawAreaChart = function(dataSet, svgSelector, selectedPerson, screen, margins)
+var drawAreaChart = function(dataSet, svgSelector, index, screen, margins, name)
 {
   console.log("start")
   //
-  var quizData = dataSet[0].quizes
+  var quizData = dataSet[index].quizes
   console.log("QuizData", quizData)
   console.log(quizData.length)
 
@@ -207,7 +231,7 @@ var area = d3.area()
                         .attr("font-size", 25)
 
   var title = graphSVG.append("text")
-                        .text("Quiz Grades: Bookworm Penguin")
+                        .text("Quiz Grades: " + name)
                         .attr("x", function(){return graphWidth/2 + margins.left - 150})
                         .attr("y", function(){return margins.top -10})
                         .attr("font-size", 25)
@@ -226,7 +250,29 @@ var initEventListeners = function(){
     console.log("Next button clicked")
     dataP.then(function(data)
     {
-      drawAreaChart(data, "#chart", "test", screenSettings, marginSettings);
+      drawAreaChart(data, "#chart0", 0, screenSettings, marginSettings,"Bookworm Penguin");
+      drawAreaChart(data, "#chart1", 1, screenSettings, marginSettings,"Crafty Penguin");
+      drawAreaChart(data, "#chart2", 2, screenSettings, marginSettings,"Cyclist Penguin");
+      drawAreaChart(data, "#chart3", 3, screenSettings, marginSettings,"Drunken Penguin");
+      drawAreaChart(data, "#chart4", 4, screenSettings, marginSettings,"Easter Penguin");
+      drawAreaChart(data, "#chart5", 5, screenSettings, marginSettings,"Ebook Penguin");
+      drawAreaChart(data, "#chart6", 6, screenSettings, marginSettings,"Farmer Penguin");
+      drawAreaChart(data, "#chart7", 7, screenSettings, marginSettings,"Gentleman Penguin");
+      drawAreaChart(data, "#chart8", 8, screenSettings, marginSettings,"Judo Penguin");
+      drawAreaChart(data, "#chart9", 9, screenSettings, marginSettings,"Moana Penguin");
+      drawAreaChart(data, "#chart10", 10, screenSettings, marginSettings,"Painter Penguin");
+      drawAreaChart(data, "#chart11", 11, screenSettings, marginSettings,"Grill Penguin");
+      drawAreaChart(data, "#chart12", 12, screenSettings, marginSettings,"Pharaoh Penguin");
+      drawAreaChart(data, "#chart13", 13, screenSettings, marginSettings,"Pilot Penguin");
+      drawAreaChart(data, "#chart14", 14, screenSettings, marginSettings,"Pinga Corr");
+      drawAreaChart(data, "#chart15", 15, screenSettings, marginSettings,"Pixie Penguin");
+      drawAreaChart(data, "#chart16", 16, screenSettings, marginSettings,"Sailor Penguin");
+      drawAreaChart(data, "#chart17", 17, screenSettings, marginSettings,"Santa Penguin");
+      drawAreaChart(data, "#chart18", 18, screenSettings, marginSettings,"Tauch Penguin");
+      drawAreaChart(data, "#chart19", 19, screenSettings, marginSettings,"Tux");
+      drawAreaChart(data, "#chart20", 20, screenSettings, marginSettings,"Valentine Ocal");
+      drawAreaChart(data, "#chart21", 21, screenSettings, marginSettings,"Valentine Penguin");
+      drawAreaChart(data, "#chart22", 22, screenSettings, marginSettings,"Wizard Penguin");
     });
   });
 
@@ -237,7 +283,29 @@ var initEventListeners = function(){
         console.log("Prev button clicked");
         dataP.then(function(data)
         {
-          drawLineChart(data, "#chart", "test", screenSettings, marginSettings);
+          drawLineChart(data, "#chart0", 0, screenSettings, marginSettings,"Bookworm Penguin");
+          drawLineChart(data, "#chart1", 1, screenSettings, marginSettings,"Crafty Penguin");
+          drawLineChart(data, "#chart2", 2, screenSettings, marginSettings,"Cyclist Penguin");
+          drawLineChart(data, "#chart3", 3, screenSettings, marginSettings,"Drunken Penguin");
+          drawLineChart(data, "#chart4", 4, screenSettings, marginSettings,"Easter Penguin");
+          drawLineChart(data, "#chart5", 5, screenSettings, marginSettings,"Ebook Penguin");
+          drawLineChart(data, "#chart6", 6, screenSettings, marginSettings,"Farmer Penguin");
+          drawLineChart(data, "#chart7", 7, screenSettings, marginSettings,"Gentleman Penguin");
+          drawLineChart(data, "#chart8", 8, screenSettings, marginSettings,"Judo Penguin");
+          drawLineChart(data, "#chart9", 9, screenSettings, marginSettings,"Moana Penguin");
+          drawLineChart(data, "#chart10", 10, screenSettings, marginSettings,"Painter Penguin");
+          drawLineChart(data, "#chart11", 11, screenSettings, marginSettings,"Grill Penguin");
+          drawLineChart(data, "#chart12", 12, screenSettings, marginSettings,"Pharaoh Penguin");
+          drawLineChart(data, "#chart13", 13, screenSettings, marginSettings,"Pilot Penguin");
+          drawLineChart(data, "#chart14", 14, screenSettings, marginSettings,"Pinga Corr");
+          drawLineChart(data, "#chart15", 15, screenSettings, marginSettings,"Pixie Penguin");
+          drawLineChart(data, "#chart16", 16, screenSettings, marginSettings,"Sailor Penguin");
+          drawLineChart(data, "#chart17", 17, screenSettings, marginSettings,"Santa Penguin");
+          drawLineChart(data, "#chart18", 18, screenSettings, marginSettings,"Tauch Penguin");
+          drawLineChart(data, "#chart19", 19, screenSettings, marginSettings,"Tux");
+          drawLineChart(data, "#chart20", 20, screenSettings, marginSettings,"Valentine Ocal");
+          drawLineChart(data, "#chart21", 21, screenSettings, marginSettings,"Valentine Penguin");
+          drawLineChart(data, "#chart22", 22, screenSettings, marginSettings,"Wizard Penguin");
         });
       });
 };
