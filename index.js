@@ -86,7 +86,7 @@ var drawLineChart2 = function(dataSet, svgSelector, index, screen, margins, name
 
   var yScale = d3.scaleLinear()
                 .domain([0, 100])
-                .range([0, graphHeight - 70 ]);
+                .range([0, graphHeight]);
 
   var yAxisScale = d3.scaleLinear()
                 .domain([0, 100])
@@ -122,7 +122,7 @@ var drawLineChart2 = function(dataSet, svgSelector, index, screen, margins, name
 
 var line = d3.line()
           .x(function(d){return xScale(d.day)})
-          .y(function(d){return yScale(d.grade)});
+          .y(function(d){return yScale(d.grade) + 75});
 
  var lineDrawer = graphSVG.append("path")
                           .datum(HwData)
@@ -221,7 +221,7 @@ var drawLineChart = function(dataSet, svgSelector, index, screen, margins, name)
 
 var line = d3.line()
           .x(function(d){return xScale(d.day)})
-          .y(function(d){return yScale(d.grade)});
+          .y(function(d){return yScale(d.grade)+75});
 
  var lineDrawer = graphSVG.append("path")
                           .datum(quizData)
@@ -323,7 +323,7 @@ var drawAreaChart = function(dataSet, svgSelector, index, screen, margins, name)
 var area = d3.area()
           .x(function(d){return xScale(d.day)})
           .y0(function(d){return graphHeight + margins.top;})
-          .y1(function(d){return yScale(d.grade)});
+          .y1(function(d){return yScale(d.grade) + 75});
 
  var areaDrawer = graphSVG.append("path")
                           .datum(quizData)
@@ -387,7 +387,7 @@ var drawAreaChart2 = function(dataSet, svgSelector, index, screen, margins, name
 
   var yScale = d3.scaleLinear()
                 .domain([0, 100])
-                .range([0, graphHeight - 70]);
+                .range([0, graphHeight]);
 
   var yAxisScale = d3.scaleLinear()
                 .domain([0, 100])
@@ -424,7 +424,7 @@ var drawAreaChart2 = function(dataSet, svgSelector, index, screen, margins, name
 var area = d3.area()
           .x(function(d){return xScale(d.day)})
           .y0(function(d){return graphHeight + margins.top;})
-          .y1(function(d){return yScale(d.grade)});
+          .y1(function(d){return yScale(d.grade) + 75});
 
  var areaDrawer = graphSVG.append("path")
                           .datum(HwData)
@@ -474,6 +474,7 @@ var initEventListeners = function(){
     console.log("Next button clicked")
     dataP.then(function(data)
     {
+      //Quiz Charts
       drawAreaChart(data, "#chart0", 0, screenSettings, marginSettings,"Bookworm Penguin");
       drawAreaChart(data, "#chart1", 1, screenSettings, marginSettings,"Crafty Penguin");
       drawAreaChart(data, "#chart2", 2, screenSettings, marginSettings,"Cyclist Penguin");
@@ -498,9 +499,10 @@ var initEventListeners = function(){
       drawAreaChart(data, "#chart21", 21, screenSettings, marginSettings,"Valentine Penguin");
       drawAreaChart(data, "#chart22", 22, screenSettings, marginSettings,"Wizard Penguin");
 
+      //Hw Charts
       drawAreaChart2(data, "#chart23", 0, screenSettings, marginSettings,"Bookworm Penguin");
       drawAreaChart2(data, "#chart24", 1, screenSettings, marginSettings,"Crafty Penguin");
-      drawAreaChart2(data, "#chart24", 2, screenSettings, marginSettings,"Cyclist Penguin");
+      drawAreaChart2(data, "#chart25", 2, screenSettings, marginSettings,"Cyclist Penguin");
       drawAreaChart2(data, "#chart26", 3, screenSettings, marginSettings,"Drunken Penguin");
       drawAreaChart2(data, "#chart27", 4, screenSettings, marginSettings,"Easter Penguin");
       drawAreaChart2(data, "#chart28", 5, screenSettings, marginSettings,"Ebook Penguin");
